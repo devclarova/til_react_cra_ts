@@ -1,0 +1,35 @@
+import { useState } from 'react';
+
+// 1. type 정의
+type UserType = { age: number; name: string };
+type ClickType = () => void;
+
+// 2. interface 정의
+interface IUserType {
+  age: number;
+  name: string;
+}
+interface IClickType {
+  (): void;
+}
+
+const User = (): JSX.Element => {
+  // ts 자리
+  const [user, setUser] = useState<UserType | IUserType>({ name: '제니', age: 20 });
+  const handleClick: ClickType | IClickType = () => {
+    setUser({ ...user, age: user.age + 1 });
+  };
+  // tsx 자리
+  return (
+    <div>
+      <h2>
+        User: {user.name}님 나이는 {user.age} 입니다.
+      </h2>
+      <div>
+        <button onClick={handleClick}>나이 증가</button>
+      </div>
+    </div>
+  );
+};
+
+export default User;
