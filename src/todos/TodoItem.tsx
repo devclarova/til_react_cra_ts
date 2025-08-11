@@ -1,11 +1,38 @@
+import { TodoType } from '@/types/todoType';
+import React from 'react';
+
 type TodoItemProps = {
-  onToggle: () => void;
-  onDelete: () => void;
+  todo: TodoType;
+  onToggle: (id: string) => void;
+  onDelte: (id: string) => void;
   onEdit: () => void;
 };
 
-const TodoItem = ({ onToggle, onDelete, onEdit }: TodoItemProps) => {
-  return <div>TodoItem</div>;
+const TodoItem = ({ todo, onToggle, onDelte, onEdit }: TodoItemProps) => {
+  // 수정은 별도의 입력창 구성으로 수정 후 값 만 업데이트
+  const handleEdit = () => {
+    console.log('여기에서 내용을 수정하는 기능 작성 후 완료된 데이터 전송');
+    onEdit();
+  };
+
+  // CSS 객체 만들기
+  const liStyle: React.CSSProperties = {
+    display: 'flex',
+    gap: '10px',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: todo.completed ? 'gray' : 'red',
+    textDecoration: todo.completed ? 'line-through' : 'none',
+  };
+
+  return (
+    <li style={liStyle}>
+      <input type="checkbox" onChange={() => onToggle(todo.id)} checked={todo.completed} />
+      <span>{todo.title}</span>
+      <button onClick={handleEdit}>수정</button>
+      <button onClick={() => onDelte(todo.id)}>삭제</button>
+    </li>
+  );
 };
 
 export default TodoItem;
